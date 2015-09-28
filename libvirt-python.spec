@@ -4,7 +4,7 @@
 #
 Name     : libvirt-python
 Version  : 1.2.19
-Release  : 20
+Release  : 21
 URL      : http://libvirt.org/sources/python/libvirt-python-1.2.19.tar.gz
 Source0  : http://libvirt.org/sources/python/libvirt-python-1.2.19.tar.gz
 Summary  : The libvirt virtualization API python2 binding
