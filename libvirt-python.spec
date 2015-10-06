@@ -4,7 +4,7 @@
 #
 Name     : libvirt-python
 Version  : 1.2.19
-Release  : 22
+Release  : 23
 URL      : http://libvirt.org/sources/python/libvirt-python-1.2.19.tar.gz
 Source0  : http://libvirt.org/sources/python/libvirt-python-1.2.19.tar.gz
 Summary  : The libvirt virtualization API python2 binding
@@ -12,7 +12,6 @@ Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1 LGPL-2.1+
 Requires: libvirt-python-python
 BuildRequires : libvirt-dev
-BuildRequires : libvirt-python
 BuildRequires : pbr
 BuildRequires : pip
 BuildRequires : python-dev
@@ -44,7 +43,8 @@ python3 setup.py build -b py3
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-py.test-2.7 --verbose; py.test-3.4 --verbose || :
+PYTHONPATH=%{buildroot}/usr/lib/python2.7/site-packages py.test-2.7 --verbose || :
+PYTHONPATH=%{buildroot}/usr/lib/python3.5/site-packages py.test-3.5 --verbose || :
 %install
 rm -rf %{buildroot}
 python2 setup.py build -b py2 install --root=%{buildroot}
