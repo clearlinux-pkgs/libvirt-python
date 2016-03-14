@@ -1,3 +1,53 @@
+2016-02-23 Pavel Hrdina  <phrdina@redhat.com>
+    
+    libvirt-override: fix PyArg_ParseTuple for size_t
+    Format string uses 'n' for Py_ssize_t but size_t is unsigned long, we
+    need to use 'k'.
+    
+    
+    
+2016-02-23 Pavel Hrdina  <phrdina@redhat.com>
+    
+    libvirt-override: fix PyArg_ParseTuple for unsigned long long
+    Format string uses 'L' for long long type and 'K' for unsigned long long
+    type.
+    
+    Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=1260356
+    
+    
+    
+2016-02-23 Pavel Hrdina  <phrdina@redhat.com>
+    
+    libvirt-override: fix PyArg_ParseTuple for unsigned int
+    Format string uses 'i' for int type and 'I' for unsigned int type.
+    
+    
+    
+2016-02-23 Pavel Hrdina  <phrdina@redhat.com>
+    
+    libvirt-override: all flags should be defined as unsigned int
+    
+    
+2016-01-18 Jiri Denemark  <jdenemar@redhat.com>
+    
+    Add support for MIGRATION_ITERATION event
+    
+    
+2016-01-18 Jiri Denemark  <jdenemar@redhat.com>
+    
+    setup: Use cflags and ldflags properly
+    The setup.py script reads cflags and ldflags from pkg-config and uses
+    them when compiling/linking C modules. Since both cflags and ldflags may
+    include multiple compiler arguments we need to split them rather than
+    concatenating them into a single argument.
+    
+    
+    
+2016-01-18 Jiri Denemark  <jdenemar@redhat.com>
+    
+    Post-release version bump to 1.3.2
+    
+    
 2016-01-17 Daniel Veillard  <veillard@redhat.com>
     
     Version bump to 1.3.1
