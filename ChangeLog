@@ -1,3 +1,16 @@
+2016-03-31 Qiaowei Ren  <qiaowei.ren@intel.com>
+    
+    python: add python binding for Perf API
+    This patch adds the python binding for virDomainSetPerfEvents and
+    virDomainSetPerfEvents API.
+    
+    
+    
+2016-03-08 Jiri Denemark  <jdenemar@redhat.com>
+    
+    Add support for JOB_COMPLETED event
+    
+    
 2016-02-23 Pavel Hrdina  <phrdina@redhat.com>
     
     libvirt-override: fix PyArg_ParseTuple for size_t
