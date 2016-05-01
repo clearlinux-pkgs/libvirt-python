@@ -1,3 +1,44 @@
+2016-04-21 Peter Krempa  <pkrempa@redhat.com>
+    
+    generator.py: Consider symbols from libvirt-common
+    Some of the libvirt public API was moved into the libvirt-common.h file.
+    We should consider it while building python too.
+    
+    
+2016-04-20 Cole Robinson  <crobinso@redhat.com>
+    
+    spec: Don't pull in dependencies for example scripts
+    If the scripts are marked as executable, RPM magic will scan them
+    for dependencies, which can pull in python2 for the python3 package
+    
+    
+2016-04-18 Pavel Hrdina  <phrdina@redhat.com>
+    
+    fix crash in getAllDomainStats
+    Commits 1d39dbaf and 827ed9b4 broke the libvirt-python API by removing
+    virDomainRef() and virDomainFree().  virDomainStatsRecordListFree() will
+    free that domain pointer and later when virDomain (python object) call
+    its destructor and tries to free that same pointer again.
+    
+    Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=1326839
+    
+    
+    
+2016-04-18 Peter Krempa  <pkrempa@redhat.com>
+    
+    event: Add support VIR_DOMAIN_EVENT_ID_DEVICE_REMOVAL_FAILED
+    
+    
+2016-04-18 Peter Krempa  <pkrempa@redhat.com>
+    
+    Post-release version bump to 1.3.4
+    
+    
+2016-04-06 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python-1.3.3
+    
+    
 2016-03-31 Qiaowei Ren  <qiaowei.ren@intel.com>
     
     python: add python binding for Perf API
