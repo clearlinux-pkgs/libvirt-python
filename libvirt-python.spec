@@ -4,7 +4,7 @@
 #
 Name     : libvirt-python
 Version  : 1.3.4
-Release  : 33
+Release  : 34
 URL      : http://libvirt.org/sources/python/libvirt-python-1.3.4.tar.gz
 Source0  : http://libvirt.org/sources/python/libvirt-python-1.3.4.tar.gz
 Summary  : The libvirt virtualization API
