@@ -1,3 +1,341 @@
+2017-04-02 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python-3.2.0
+    * setup.py: bumped version
+    
+    
+2017-03-29 Peter Krempa  <pkrempa@redhat.com>
+    
+    event: Add handler for block threshold event
+    Unfortunately python doesn't generate those.
+    
+    
+2017-03-29 Peter Krempa  <pkrempa@redhat.com>
+    
+    event: fix comment for _dispatchDomainEventMetadataChangeCallback
+    The comment was copied from the device removal failed event.
+    
+    
+2017-01-27 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Removed unused 'functions_list_exception_test' code from generator
+    The 'functions_list_exception_test' data structure and associated code
+    in the generator is inherited from libxml. This has never
+    been used in libvirt, so delete it to simplify the generator.
+    
+    
+    
+2017-01-27 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Removed unused 'converter_type' code from generator
+    The 'converter_type' data structure and associated code
+    in the generator is inherited from libxml. This has never
+    been used in libvirt, so delete it to simplify the generator.
+    
+    
+    
+2017-01-27 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Removed unused 'classes_ancestor' code from generator
+    The 'classes_ancestor' data structure and associated code
+    in the generator is inherited from libxml. This has never
+    been used in libvirt, so delete it to simplify the generator.
+    
+    
+    
+2017-01-27 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Removed unused 'py_return_types' code from generator
+    The 'py_return_types' data structure and associated code
+    in the generator is inherited from libxml. This has never
+    been used in libvirt, so delete it to simplify the generator.
+    
+    
+    
+2017-01-27 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Removed unused 'foreign_encoding_args' code from generator
+    The 'foreign_encoding_args' data structure and associated code
+    in the generator is inherited from libxml. This has never
+    been used in libvirt, so delete it to simplify the generator.
+    
+    
+    
+2017-01-27 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Removed unused 'function_post' code from generator
+    The 'function_post' data structure and associated code
+    in the generator is inherited from libxml. This has never
+    been used in libvirt, so delete it to simplify the generator.
+    
+    
+    
+2017-01-27 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Removed unused 'reference_keepers' code from generator
+    The 'reference_keepers' data structure and associated code
+    in the generator is inherited from libxml. This has never
+    been used in libvirt, so delete it to simplify the generator.
+    
+    
+    
+2017-01-27 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Protect against user accidentally calling constructors directly
+    When using libvirt python you must never call the object
+    constructors directly, as these are expecting to be passed
+    a wrapped C object. For example
+    
+    import libvirt
+    c = libvirt.virConnect("qemu:///system")
+    c.listAllDomains()
+    
+    will mysteriously segfault. With this change the user now
+    gets an slightly more helpful error
+    
+    Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    File "/home/berrange/src/virt/libvirt-python/build/libvirt.py", line 3409, in __init__
+    raise Exception("Expected a wrapped C Object but got %s" % type(_obj))
+    Exception: Expected a wrapped C Object but got <type 'str'>
+    
+    
+    
+2017-01-18 Wu Zongyong  <wuzongyo@mail.ustc.edu.cn>
+    
+    Fix the incorrect memory freeing which will result in crash
+    Commit id '71fd95409' neglected to adjust a couple of API's do that now.
+    
+    The number of elements in new_params is equal to the length of info,
+    instead of nparams, so it's wrong to free new_params using nparams.
+    
+    
+    
+2017-01-18 John Ferlan  <jferlan@redhat.com>
+    
+    Post-release version bump to 3.1.0
+    
+    
+2017-01-17 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python-3.0.0
+    
+    
+2017-01-10 Michal Privoznik  <mprivozn@redhat.com>
+    
+    examples: Update event-test.py
+    With recent changes there are new events known to libvirt.
+    Reflect those changes in our event-test.py example script.
+    
+    
+    
+2017-01-10 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Fix typos in previous secrets event patch
+    
+    
+2017-01-09 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Add support for domain metadata change event
+    
+    
+2017-01-09 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Add support for secret event APIs
+    
+    
+2016-12-21 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Add override impl for virStorageVolGetInfoFlags
+    
+    
+2016-12-21 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Remove bogus \o escape in regex
+    One of the regexes has a bogus \o instead of plain 'o'. Somehow
+    this magically worked on all versions of python, until 3.6 came
+    along and complained
+    
+    
+    
+2016-12-14 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Fix running of nosetests on python 3
+    Previously the way Fedora installed /usr/bin/nosetests allowed it
+    to be invoked with either python 2 or 3. Since Fedora 25 though,
+    it contains a module name that only exists on python 2. So we need
+    to be more intelligent and pick a different nosetests binary per
+    version.
+    
+    
+    
+2016-12-13 Prabodh Agarwal  <prabodh1194@users.noreply.github.com>
+    
+    HACKING: fix grammar
+    
+    
+2016-12-05 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Fill out more fields for PKG-INFO file
+    Ensure the description and license are set in PKG-INFO,
+    and clarify the summary field.
+    
+    
+    
+2016-11-11 Konstantin Neumoin  <kneumoin@virtuozzo.com>
+    
+    don't overrun buffer when converting cpumap
+    If we pass large(more than cpunum) cpu mask to any libvirt_virDomainPin*
+    function, it could leads to crash. So we have to check tuple size in
+    virPyCpumapConvert and ignore extra tuple members.
+    
+    Since we allocate a zeroed buffer, we don't need to bother with setting
+    the bits to zero.
+    
+    
+    
+2016-11-11 Konstantin Neumoin  <kneumoin@virtuozzo.com>
+    
+    move cpumap conversion code to a common helper
+    All libvirt_virDomainPin* functions do the same thing for convert
+    pycpumap to cpumap, so this patch moves all common logic to new
+    helper - virPyCpumapConvert.
+    
+    
+    
+2016-11-02 Pavel Hrdina  <phrdina@redhat.com>
+    
+    Post-release version bump to 2.5.0
+    
+    
+2016-11-01 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-2.4.0
+    * setup.py: just bumped up the release number
+    
+    
+2016-09-19 Peter Krempa  <pkrempa@redhat.com>
+    
+    override: Properly override wrapper for virDomainGetGuestVcpus
+    Without the change to libvirt-override-api.xml generator.py would
+    generate the following function header:
+    
+    def guestVcpus(self, params, nparams, flags=0):
+    
+    Since @params and @nparams are output-only in C and the python C
+    implementation actualy creates a dict from them we should not need to
+    pass them. Add the API definition to drop the two unnecessary args:
+    
+    def guestVcpus(self, flags=0):
+    
+    The code did not work at all until this change as the C impl expects
+    only two arguments but the python required use of four.
+    
+    Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=1377071
+    
+    
+2016-09-19 Peter Krempa  <pkrempa@redhat.com>
+    
+    Post-release version bump to 2.3.0
+    
+    
+2016-08-24 Michal Privoznik  <mprivozn@redhat.com>
+    
+    PyArg_ParseTuple: Provide correct function names
+    At the end of the format string we put :virFunctionName where ':'
+    says "this is the end of argument list", and virFunctionName is
+    the prefix for error messages then.  However, in some cases we
+    have had wrong names there. Some of them are actually quite
+    funny: xmlRegisterErrorHandler.
+    
+    
+    
+2016-08-17 Jovanka Gulicoska  <jovanka.gulicoska@gmail.com>
+    
+    event-test: support node device update callback
+    
+    
+2016-08-17 Jovanka Gulicoska  <jovanka.gulicoska@gmail.com>
+    
+    Add support for node device update callback
+    
+    
+2016-08-02 Jovanka Gulicoska  <jovanka.gulicoska@gmail.com>
+    
+    event-test: Add node device lifecycle event tests
+    
+    
+2016-08-02 Jovanka Gulicoska  <jovanka.gulicoska@gmail.com>
+    
+    Python binding for node poll lifecycle events API
+    
+    
+2016-08-02 Cole Robinson  <crobinso@redhat.com>
+    
+    Post-release version bump to 2.2.0
+    
+    
+2016-07-28 Markus Rothe  <markusr815@gmail.com>
+    
+    allow pkg-config binary to be set by env
+    https://bugzilla.redhat.com/show_bug.cgi?id=1350523
+    
+    
+2016-07-25 Pavel Hrdina  <phrdina@redhat.com>
+    
+    Post-release version bump to 2.1.0
+    
+    
+2016-07-23 Pavel Hrdina  <phrdina@redhat.com>
+    
+    Fix crash in storage pool refresh callback
+    Fixes copy-paste typo introduced by commit cb84e36c.
+    
+    Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=1354271
+    
+    
+    
+2016-06-24 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Add support for storage pool refesh callback
+    
+    
+2016-06-24 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Fix signedness of arg to virDomainGetGuestVcpus
+    
+    
+2016-06-23 Michal Privoznik  <mprivozn@redhat.com>
+    
+    Add support for virDomainGetGuestVcpus
+    This function has virTypedParameterPtr as one of the args and our
+    generator is unable to deal with that. Therefore we must provide
+    implementation.
+    
+    
+    
+2016-06-16 Jovanka Gulicoska  <jovanka.gulicoska@gmail.com>
+    
+    event-test: Add storage pool lifecycle event tests
+    
+    
+2016-06-16 Jovanka Gulicoska  <jovanka.gulicoska@gmail.com>
+    
+    Python binding for storage pool lifecycle events API
+    Code matches the network event API implementation
+    
+    
+2016-06-14 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Post-release version bump to 2.0.0
+    
+    
+2016-06-04 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python-1.3.5
+    * setup.py: bumped to 1.3.5, the release is virtually identical to 1.3.4
+    
+    
 2016-04-21 Peter Krempa  <pkrempa@redhat.com>
     
     generator.py: Consider symbols from libvirt-common

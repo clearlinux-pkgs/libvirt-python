@@ -1,5 +1,5 @@
 PKG_NAME := libvirt-python
-URL := http://libvirt.org/sources/python/libvirt-python-1.3.4.tar.gz
-ARCHIVES :=
+URL := http://libvirt.org/sources/python/libvirt-python-3.2.0.tar.gz
+
 
 include ../common/Makefile.common
