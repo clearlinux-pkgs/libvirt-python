@@ -6,13 +6,14 @@
 #
 Name     : libvirt-python
 Version  : 3.2.0
-Release  : 36
+Release  : 37
 URL      : http://libvirt.org/sources/python/libvirt-python-3.2.0.tar.gz
 Source0  : http://libvirt.org/sources/python/libvirt-python-3.2.0.tar.gz
 Source99 : http://libvirt.org/sources/python/libvirt-python-3.2.0.tar.gz.asc
 Summary  : The libvirt virtualization API python binding
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1 LGPL-2.1+
+Requires: libvirt-python-legacypython
 Requires: libvirt-python-python
 BuildRequires : libvirt-dev
 BuildRequires : pbr
@@ -26,9 +27,18 @@ written in the Python programming language to call the interface
         supplied by the libvirt library, to manage the virtualization capabilities
         of recent versions of Linux (and other OSes).
 
+%package legacypython
+Summary: legacypython components for the libvirt-python package.
+Group: Default
+
+%description legacypython
+legacypython components for the libvirt-python package.
+
+
 %package python
 Summary: python components for the libvirt-python package.
 Group: Default
+Requires: libvirt-python-legacypython
 
 %description python
 python components for the libvirt-python package.
@@ -42,7 +52,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1504019819
+export SOURCE_DATE_EPOCH=1505005293
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
@@ -52,7 +62,7 @@ export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 PYTHONPATH=%{buildroot}/usr/lib/python2.7/site-packages py.test-2.7 --verbose || :
 %install
-export SOURCE_DATE_EPOCH=1504019819
+export SOURCE_DATE_EPOCH=1505005293
 rm -rf %{buildroot}
 python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
 python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
@@ -63,7 +73,10 @@ echo ----[ mark ]----
 %files
 %defattr(-,root,root,-)
 
-%files python
+%files legacypython
 %defattr(-,root,root,-)
 /usr/lib/python2*/*
+
+%files python
+%defattr(-,root,root,-)
 /usr/lib/python3*/*
