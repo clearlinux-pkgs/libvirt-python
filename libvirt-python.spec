@@ -6,7 +6,7 @@
 #
 Name     : libvirt-python
 Version  : 3.2.0
-Release  : 38
+Release  : 39
 URL      : http://libvirt.org/sources/python/libvirt-python-3.2.0.tar.gz
 Source0  : http://libvirt.org/sources/python/libvirt-python-3.2.0.tar.gz
 Source99 : http://libvirt.org/sources/python/libvirt-python-3.2.0.tar.gz.asc
