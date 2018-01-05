@@ -1,3 +1,399 @@
+2017-11-30 Cédric Bosdonnat  <cbosdonnat@suse.com>
+    
+    Don't hardcode interpreter path
+    This is particularly useful on operating systems that don't ship
+    Python as part of the base system (eg. FreeBSD) while still working
+    just as well as it did before on Linux.
+    
+    Reviewed-by: Daniel P. Berrange <berrange@redhat.com>
+    
+    
+2017-11-02 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python-3.9.0
+    
+    
+2017-09-29 Nir Soffer  <nirsof@gmail.com>
+    
+    Unify whitespace around *_ALLOW_THREADS macros
+    Most of the code treats libvirt API calls as separate block, keeping one
+    blank line before the LIBVIRT_BEGIN_ALLOW_THREAD, and one blank line
+    after LIBVIRT_END_ALLOW_THREADS. Unify the whitespace so all calls
+    wrapped with these macros are treated as a separate block.
+    
+    
+2017-09-27 Nir Soffer  <nirsof@gmail.com>
+    
+    Release the GIL during virDomainGetMemoryStats & virDomainGetDiskErrors
+    We discovered that the entire python process get stuck for about 30
+    seconds when calling virDomain.getMemoryStats() if libvirt is stuck in
+    virConnect.getAllDomainStats() on inaccessible storage. This blocking
+    cause a horrible mess in oVirt.
+    
+    This patches adds the standard *_ALLOW_THREADS around the call to avoid
+    this unwanted blocking.
+    
+    
+    
+2017-09-26 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Avoid implicit treatment of an arithmetic result as a boolean
+    Latest GCC versions are unhappy with us treating an integer
+    arithmetic result as a boolean:
+    
+    libvirt-utils.c: In function ‘virReallocN’:
+    libvirt-utils.c:111:23: warning: ‘*’ in boolean context, suggest ‘&&’ instead [-Wint-in-bool-context]
+    if (!tmp && (size * count)) {
+    ~~~~~~^~~~~~~~
+    
+    Add an explicit comparison '!= 0' to keep it happy, since its
+    suggestion to use '&&' is nonsense.
+    
+    
+    
+2017-09-26 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Fix comparisons between signed & unsigned integers
+    When python3 builds C modules, it adds the -Wsign-compare flag to GCC.
+    This creates lots of warnings where we compare a 'size_t' value against
+    an 'int' value due to signed/unsigned difference.  Change all the size_t
+    types to ssize_t to address this.
+    
+    
+    
+2017-09-26 Wojtek Porczyk  <woju@invisiblethingslab.com>
+    
+    libvirtaio: add .drain() coroutine
+    The intended use is to ensure that the implementation is empty, which is
+    one way to ensure that all connections were properly closed and file
+    descriptors reclaimed.
+    
+    
+    
+2017-09-26 Wojtek Porczyk  <woju@invisiblethingslab.com>
+    
+    libvirtaio: keep track of the current implementation
+    Since 7534c19 it is not possible to register event implementation twice.
+    Instead, allow for retrieving the current one, should it be needed
+    afterwards.
+    
+    
+    
+2017-09-26 Wojtek Porczyk  <woju@invisiblethingslab.com>
+    
+    libvirtaio: fix closing of the objects
+    - Descriptor.close() was a dead code, never used.
+    - TimeoutCallback.close(), as a cleanup function, should have called
+    super() as last statement, not first
+    
+    
+    
+2017-09-26 Wojtek Porczyk  <woju@invisiblethingslab.com>
+    
+    libvirtaio: do not double-add callbacks
+    This was a harmless bug, without any impact, but it is wrong to manage
+    the collection of callbacks from it's members.
+    
+    
+    
+2017-09-26 Wojtek Porczyk  <woju@invisiblethingslab.com>
+    
+    libvirtaio: cache the list of callbacks when calling
+    When the callback causes something that results in changes wrt
+    registered handles, python aborts iteration.
+    
+    Relevant error message:
+    
+    Exception in callback None()
+    handle: <Handle cancelled>
+    Traceback (most recent call last):
+    File "/usr/lib64/python3.5/asyncio/events.py", line 126, in _run
+    self._callback(*self._args)
+    File "/usr/lib64/python3.5/site-packages/libvirtaio.py", line 99, in _handle
+    for callback in self.callbacks.values():
+    RuntimeError: dictionary changed size during iteration
+    
+    QubesOS/qubes-issues#2805
+    
+    
+2017-09-26 Wojtek Porczyk  <woju@invisiblethingslab.com>
+    
+    libvirtaio: add more debug logging
+    This logging is helpful for tracing problems with unclosed connections
+    and leaking file descriptors.
+    
+    
+    
+2017-09-19 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Add travis build config
+    Enable builds on several python versions, and against several versions
+    of libvirt. Ideally we would build all the way back to 0.9.11, since
+    that is the min supported libvirt for python binding. It is not possible
+    to build this old libvirt version on modern distros though, so using
+    1.2.0 as the oldest for now.
+    
+    Reviewed-by: Martin Kletzander <mkletzan@redhat.com>
+    
+    
+2017-09-18 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Skip sparseRecvAll / sparseSendAll in sanity test
+    The sanity test check aims to ensure that every function listed in
+    the Python code maps to a corresponding C function. The Sparse
+    send/recv methods are special though - we're never calling the
+    corresponding C APIs, instead we have a pure python impl.
+    
+    
+    
+2017-09-06 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Post-release version bump to 3.8.0
+    
+    
+2017-09-06 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Report an error if registering an event loop twice
+    The C library will now ignore an attempt to register an event
+    loop twice. It is unable to report an error in this case though
+    due to the C API returning 'void'. To improve this we must
+    manually report an error at the python level.
+    
+    
+    
+2017-09-06 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Remove unused variables for event callbacks
+    
+    
+2017-09-04 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Change Obsoletes to an explicit version
+    We only want to obsolete versions which actually had the
+    original name, not all future versions.
+    
+    
+    
+2017-09-04 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python 3.7.0
+    * setup.py: updated for release
+    
+    
+2017-08-26 John Ferlan  <jferlan@redhat.com>
+    
+    Implement virDomainMigrateGetMaxDowntime
+    Add override code for virDomainMigrateGetMaxDowntime
+    
+    
+2017-08-26 John Ferlan  <jferlan@redhat.com>
+    
+    Introduce virDomainMigrateGetMaxDowntime API
+    Introduce wrapper for virDomainMigrateGetMaxDowntime
+    
+    
+2017-08-10 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Fix package name in description of sub-RPMs
+    
+    
+2017-08-10 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Revert "rpm: assume python3 is always available"
+    This reverts commit b302b6d884ad4c6c917203a463f3377f3615b030.
+    
+    Only drop the Fedora 18 test - RHEL must still build without
+    python 3
+    
+    
+2017-08-10 Daniel P. Berrange  <berrange@redhat.com>
+    
+    rpm: rename packages to python2-libvirt / python3-libvirt
+    This complies with Fedora naming policy for python packages
+    
+    Reviewed-by: Martin Kletzander <mkletzan@redhat.com>
+    
+    
+2017-08-10 Daniel P. Berrange  <berrange@redhat.com>
+    
+    rpm: assume python3 is always available
+    Reviewed-by: Martin Kletzander <mkletzan@redhat.com>
+    
+    
+2017-08-02 Tomáš Golembiovský  <tgolembi@redhat.com>
+    
+    virDomainMemoryStats: include usable memory and last update
+    We've forgot to include VIR_DOMAIN_MEMORY_STAT_USABLE and
+    VIR_DOMAIN_MEMORY_STAT_LAST_UPDATE constants.
+    
+    
+    
+2017-08-02 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python-3.6.0
+    virtually identical to 3.5.0 except for the bump of version in setup.py
+    
+    
+2017-07-04 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python-3.5.0
+    * setup.py: bump version number
+    
+    
+2017-06-20 Martin Kletzander  <mkletzan@redhat.com>
+    
+    Add details for shutdown event
+    In commit a8eba5036cb4b0e2ec827e9e6e019ce70e451377, libvirt added
+    support for two more details.  In python bindings it all worked fine
+    automagically except an example that was not updated.
+    
+    Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=1463188
+    
+    
+    
+2017-06-02 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python-3.4.0
+    
+    
+2017-05-24 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Fix error check for virDomainGetTime method
+    The virDomainGetTime returns either a dict or None, but the python
+    glue layer for checking for '-1'. Thus it failed to raise an
+    exception on error.
+    
+    
+    
+2017-05-24 Michal Privoznik  <mprivozn@redhat.com>
+    
+    examples: Introduce sparsestream.py
+    Sparse streams are not that straight forward to use for the very
+    first time. Especially the sparseRecvAll() and sparseSendAll()
+    methods which expects callbacks. What we can do to make it easier
+    for developers is to have an example where they can take an
+    inspiration from.
+    
+    
+    
+2017-05-24 Michal Privoznik  <mprivozn@redhat.com>
+    
+    virStream: Introduce virStreamSparse{Recv,Send}All
+    Yet again, our parser is not capable of generating proper
+    wrapper. To be fair, this one wold be really tough anyway.
+    
+    
+    
+2017-05-23 Michal Privoznik  <mprivozn@redhat.com>
+    
+    virStream: Introduce virStreamRecvFlags
+    Yet again, we need a custom wrapper over virStreamRecvFlags
+    because our generator is not capable of generating it.
+    
+    
+    
+2017-05-23 Michal Privoznik  <mprivozn@redhat.com>
+    
+    Implement virStreamSendHole/virStreamRecvHole
+    The return value for virStreamRecvHole is slightly different to
+    its C counterpart. In python, either it returns the hole size or
+    None if C API fails.
+    
+    
+    
+2017-05-17 Xavier Fernandez  <xav.fernandez@gmail.com>
+    
+    Use better comparison in virStream.sendAll for Python 3
+    In Python 3, if the file is open in binary mode, @got will end up
+    being equal to b"" and b"" != "" in Python 3.
+    
+    
+2017-05-15 Martin Kletzander  <mkletzan@redhat.com>
+    
+    spec: Install egg-info with rpm package
+    This was being done due to now deprecated policy and that file should
+    be installed so that pip can recognize that the packages is already
+    installed in the system.
+    
+    
+    
+2017-05-05 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python-3.3.0
+    
+    
+2017-04-04 Daniel P. Berrange  <berrange@redhat.com>
+    
+    event-test: add ability to run the asyncio event loop
+    The event test program '--loop' arg is modified to take the name
+    of an event loop impl to run. eg 'event-test.py --loop asyncio'
+    
+    
+    
+2017-04-04 Daniel P. Berrange  <berrange@redhat.com>
+    
+    event-test: rename example event loop impl
+    Use the name 'Poll' instead of 'Pure' for the event loop demo,
+    since there's now a second pure python loop impl available.
+    
+    
+    
+2017-04-04 Daniel P. Berrange  <berrange@redhat.com>
+    
+    event-test: unregister callbacks & close conn on exit
+    In order to test cleanup code paths we must unregister all callbacks
+    and close the connection on shutdown. Since cleanup happens in the
+    background, we do a short sleep to allow the main loop to run its
+    cleanup too.
+    
+    
+    
+2017-04-04 Daniel P. Berrange  <berrange@redhat.com>
+    
+    event-test: add timeout to exit event loop
+    
+    
+2017-04-04 Daniel P. Berrange  <berrange@redhat.com>
+    
+    event-test: free opaque data when removing callbacks
+    The pure python event loop impl has to call
+    
+    libvirt.virEventInvokeFreeCallback
+    
+    to free the event opaque data from a clean stack context
+    
+    
+    
+2017-04-04 Wojtek Porczyk  <woju@invisiblethingslab.com>
+    
+    Add asyncio event loop implementation
+    This is usable only on python >= 3.4 (or 3.3 with out-of-tree asyncio),
+    however it should be harmless for anyone with older python versions.
+    
+    In simplest case, to have the callbacks queued on the default loop:
+    
+    >>> import libvirtaio
+    >>> libvirtaio.virEventRegisterAsyncIOImpl()
+    
+    The function is not present on non-compatible platforms.
+    
+    
+    
+2017-04-04 Wojtek Porczyk  <woju@invisiblethingslab.com>
+    
+    Allow for ff callbacks to be called by custom event implementations
+    The documentation says:
+    > If the opaque user data requires free'ing when the handle is
+    > unregistered, then a 2nd callback can be supplied for this purpose.
+    > This callback needs to be invoked from a clean stack. If 'ff'
+    > callbacks are invoked directly from the virEventRemoveHandleFunc they
+    > will likely deadlock in libvirt.
+    
+    And they did deadlock. In removeTimeout too. Now we supply a custom
+    function to pick it from the opaque blob and fire.
+    
+    
+    
 2017-04-02 Daniel Veillard  <veillard@redhat.com>
     
     Release of libvirt-python-3.2.0
