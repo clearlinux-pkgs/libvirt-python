@@ -4,13 +4,12 @@
 #
 Name     : libvirt-python
 Version  : 3.10.0
-Release  : 42
+Release  : 43
 URL      : http://libvirt.org/sources/python/libvirt-python-3.10.0.tar.gz
 Source0  : http://libvirt.org/sources/python/libvirt-python-3.10.0.tar.gz
 Summary  : The libvirt virtualization API python binding
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1 LGPL-2.1+
-Requires: libvirt-python-legacypython
 Requires: libvirt-python-python3
 Requires: libvirt-python-python
 BuildRequires : libvirt-dev
@@ -25,19 +24,9 @@ written in the Python programming language to call the interface
         supplied by the libvirt library, to manage the virtualization capabilities
         of recent versions of Linux (and other OSes).
 
-%package legacypython
-Summary: legacypython components for the libvirt-python package.
-Group: Default
-Requires: python-core
-
-%description legacypython
-legacypython components for the libvirt-python package.
-
-
 %package python
 Summary: python components for the libvirt-python package.
 Group: Default
-Requires: libvirt-python-legacypython
 Requires: libvirt-python-python3
 
 %description python
@@ -61,8 +50,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1515195552
-python2 setup.py build -b py2
+export SOURCE_DATE_EPOCH=1523291444
 python3 setup.py build -b py3
 
 %check
@@ -71,20 +59,14 @@ export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 PYTHONPATH=%{buildroot}/usr/lib/python2.7/site-packages py.test-2.7 --verbose || :
 %install
-export SOURCE_DATE_EPOCH=1515195552
 rm -rf %{buildroot}
-python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
-python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
+python3 -tt setup.py build -b py3 install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
 
 %files
 %defattr(-,root,root,-)
-
-%files legacypython
-%defattr(-,root,root,-)
-/usr/lib/python2*/*
 
 %files python
 %defattr(-,root,root,-)
