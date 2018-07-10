@@ -4,7 +4,7 @@
 #
 Name     : libvirt-python
 Version  : 3.10.0
-Release  : 51
+Release  : 52
 URL      : http://libvirt.org/sources/python/libvirt-python-3.10.0.tar.gz
 Source0  : http://libvirt.org/sources/python/libvirt-python-3.10.0.tar.gz
 Summary  : The libvirt virtualization API python binding
