@@ -1,3 +1,488 @@
+2018-09-03 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python=4.7.0
+    * setup.py: updated for release
+    
+    
+    
+2018-08-06 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python-4.6.0
+    * setup.py: updated for release
+    
+    
+    
+2018-07-23 Daniel P. Berrangé  <berrange@redhat.com>
+    
+    rpm: update min required rhel/fedora
+    Reviewed-by: Andrea Bolognani <abologna@redhat.com>
+    
+    
+2018-07-23 Daniel P. Berrangé  <berrange@redhat.com>
+    
+    rpm: add BuildRequires on gcc
+    The gcc RPM is no longer part of the default build root.
+    
+    Reviewed-by: Andrea Bolognani <abologna@redhat.com>
+    
+    
+2018-07-23 Daniel P. Berrangé  <berrange@redhat.com>
+    
+    rpm: use the versioned python2 macro names
+    The use of non-versioned python2 macro names is deprecated in Fedora
+    
+    Reviewed-by: Andrea Bolognani <abologna@redhat.com>
+    
+    
+2018-07-16 Daniel P. Berrangé  <berrange@redhat.com>
+    
+    travis: add libvirt 4.5.0 version to build matrix
+    
+    
+2018-07-16 Daniel P. Berrangé  <berrange@redhat.com>
+    
+    fix build with older libvirt missing virNWFilterBindingPtr
+    While we correctly disable all public API bindings that rely on
+    virNWFilterBindingPtr, the generator is still creating a helper function
+    that needs it - libvirt_virNWFilterBinding_pointer. Making this helper
+    conditional is a little hairy, so just provide a trivial typedef to keep
+    it happy.
+    
+    
+    
+2018-07-10 Cole Robinson  <crobinso@redhat.com>
+    
+    spec: Remove Group: and %defattr
+    These are only needed for RHEL5 builds, which are no longer supported
+    
+    https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/message/CMCUBB4SWS3URHTRRS3OPFM4HF5CGKBW/
+    https://fedoraproject.org/wiki/RPMGroups
+    
+    
+    
+2018-07-02 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python-4.5.0
+    * setup.py: updated for release
+    
+    
+    
+2018-06-28 Daniel P. Berrangé  <berrange@redhat.com>
+    
+    Fix bugs in nwfilter binding APIs
+    We did not correctly mangle the API names in two cases, and we also
+    forgot to specialize the lookup method name in the sanity test.
+    
+    
+    
+2018-06-28 Daniel P. Berrangé  <berrange@redhat.com>
+    
+    Add support for nwfilter binding objects / apis
+    
+    
+2018-06-27 Cole Robinson  <crobinso@redhat.com>
+    
+    libvirtaio: Fix compat with python 3.7
+    In python 3.7, async is now a keyword, so this throws a syntax error:
+    
+    File "/usr/lib64/python3.7/site-packages/libvirtaio.py", line 49
+    from asyncio import async as ensure_future
+    ^
+    SyntaxError: invalid syntax
+    
+    Switch to getattr trickery to accomplish the same goal
+    
+    Reviewed-by: Pavel Hrdina <phrdina@redhat.com>
+    Reviewed-by: Andrea Bolognani <abologna@redhat.com>
+    
+    
+2018-06-14 Erik Skultety  <eskultet@redhat.com>
+    
+    Add support for virNodeGetSEVInfo
+    This binding allows to query the AMD's SEV firmware for various platform
+    specific things, like a PDH certificate and a certificate chain to
+    establish a trusted connection with the firmware. Because the API uses
+    typed params, it's exempted from generation.
+    
+    Reviewed-by: Ján Tomko <jtomko@redhat.com>
+    
+    
+2018-06-14 Erik Skultety  <eskultet@redhat.com>
+    
+    Add support for virDomainGetLaunchSecurityInfo
+    Libvirt recently introduced support for getting launch security
+    parameters, most notably AMD SEV VM memory measurement. This API can't
+    be generated as it's using typed parameters which we need to allocate.
+    
+    Reviewed-by: Ján Tomko <jtomko@redhat.com>
+    
+    
+2018-06-12 Pavel Hrdina  <phrdina@redhat.com>
+    
+    libvirt_charPtrUnwrap: remove unnecessary check of returned string
+    Function libvirt_charPtrUnwrap() either fails or always sets the
+    unwrapped string so there is no need to check it explicitly.
+    
+    Reviewed-by: Ján Tomko <jtomko@redhat.com>
+    
+    
+2018-06-12 Pavel Hrdina  <phrdina@redhat.com>
+    
+    libvirt-override: Reset exception if the error is ignored
+    In virConnectCredCallbackWrapper() we ignore the error case of
+    libvirt_charPtrUnwrap() function so we should also reset the exception.
+    
+    Reviewed-by: Ján Tomko <jtomko@redhat.com>
+    
+    
+2018-06-12 Pavel Hrdina  <phrdina@redhat.com>
+    
+    typewrappers: Fix libvirt_charPtrUnwrap to set an exception if it fails
+    If the function fails it should always set an exception.
+    
+    Reviewed-by: Ján Tomko <jtomko@redhat.com>
+    
+    
+2018-06-12 Pavel Hrdina  <phrdina@redhat.com>
+    
+    libvirt-utils: remove unused py_str function
+    Commit <57a160b5248ba47d4e1c9d22d95847dad8e0524f> removed last usage
+    but did not remove the function itself.
+    
+    Reviewed-by: Ján Tomko <jtomko@redhat.com>
+    
+    
+2018-06-06 Daniel P. Berrangé  <berrange@redhat.com>
+    
+    Blacklist virGetLastError{Code,Domain}
+    These methods will not be exposed to apps, since we auto raise
+    all errors.
+    
+    
+    
+2018-06-04 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python-4.4.0
+    * setup.py: update for release
+    
+    
+    
+2018-06-01 Jiri Denemark  <jdenemar@redhat.com>
+    
+    Add support for virConnectBaselineHypervisorCPU
+    The python bindings for this API cannot be generated because are
+    generator is not capable of handling string arrays (char **) parameters.
+    
+    https://bugzilla.redhat.com/show_bug.cgi?id=1584676
+    
+    Reviewed-by: Ján Tomko <jtomko@redhat.com>
+    
+    
+2018-05-22 Michal Privoznik  <mprivozn@redhat.com>
+    
+    event-test.py: Sync list of storage lifecycle events
+    https://bugzilla.redhat.com/show_bug.cgi?id=1578337
+    
+    Since libvirt 3.8.0 we have 6 events: defined, undefined,
+    started, stopped, created, deleted. However, the last two were
+    missing in a string list that translates libvirt events (int)
+    into human readable strings.
+    
+    Reviewed-by: Pavel Hrdina <phrdina@redhat.com>
+    
+    
+2018-05-16 Marc Hartmayer  <mhartmay@linux.vnet.ibm.com>
+    
+    Allow virConnect to be used as a context manager
+    The libvirt python bindings are now more 'pythonic' as virConnect can
+    now be used as a context manager.
+    
+    For example, it's possible to write the following code:
+    
+    with libvirt.open() as conn:
+    # do something with the connection...
+    print(conn.listAllDomains())
+    
+    At the end of this with-block the connection will be closed
+    automatically.
+    
+    Reviewed-by: Bjoern Walk <bwalk@linux.vnet.ibm.com>
+    Reviewed-by: Boris Fiuczynski <fiuczy@linux.vnet.ibm.com>
+    
+    
+2018-05-16 Marc Hartmayer  <mhartmay@linux.vnet.ibm.com>
+    
+    libvirt-override.py: remove unused import
+    Reviewed-by: Boris Fiuczynski <fiuczy@linux.vnet.ibm.com>
+    Reviewed-by: Bjoern Walk <bwalk@linux.vnet.ibm.com>
+    
+    
+2018-05-16 Boris Fiuczynski  <fiuczy@linux.vnet.ibm.com>
+    
+    libvirt-override.py: fix sparseSendAll
+    Variable ret is used before assignment.
+    
+    
+    
+2018-05-16 Marc Hartmayer  <mhartmay@linux.vnet.ibm.com>
+    
+    libvirt_qemu/lxc: fix a namespace issue
+    Reviewed-by: Bjoern Walk <bwalk@linux.vnet.ibm.com>
+    Reviewed-by: Boris Fiuczynski <fiuczy@linux.vnet.ibm.com>
+    
+    
+2018-05-16 Marc Hartmayer  <mhartmay@linux.vnet.ibm.com>
+    
+    libvirt_qemu/lxc: import 'sys' package
+    This fixes the pylint [1] warning "E: 25,16: Undefined variable
+    'sys' (undefined-variable)".
+    
+    [1] https://www.pylint.org/
+    
+    Reviewed-by: Boris Fiuczynski <fiuczy@linux.vnet.ibm.com>
+    Reviewed-by: Bjoern Walk <bwalk@linux.vnet.ibm.com>
+    
+    
+2018-05-03 Andrea Bolognani  <abologna@redhat.com>
+    
+    maint: Drop autobuild.sh
+    The Test-AutoBuild project, that this script is supposed
+    to be used with, hasn't seen any activity in ~7 years;
+    these days, libvirt-python CI builds are happening on the
+    Jenkins-based CentOS CI environment under the libvirt
+    umbrella[1], and in that context the script is not used
+    at all.
+    
+    [1] https://ci.centos.org/view/libvirt/
+    
+    Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+    
+    
+2018-04-24 Daniel P. Berrangé  <berrange@redhat.com>
+    
+    git: add config file telling git-publish how to send patches
+    The "git-publish" tool is a useful git extension for sending patch
+    series for code review. It automatically creates versioned tags
+    each time code on a branch is sent, so that there is a record of
+    each version. It also remembers the cover letter so it does not
+    need re-entering each time the series is reposted.
+    
+    With this config file present it is now sufficient[1] to run
+    
+    $ git publish
+    
+    to send all patches in a branch to the list for review, with the
+    correct subject prefix added for this non-core libvirt module.
+    
+    [1] Assuming your $HOME/.gitconfig has an SMTP server listed
+    at least e.g.
+    
+    [sendemail]
+    smtpserver = smtp.example.com
+    
+    
+    
+2018-04-19 Daniel P. Berrangé  <berrange@redhat.com>
+    
+    Fix build with older libvirt versions
+    The libvirt python module is supposed to build with historical versions
+    of the API back to 0.9.1, which means all constants / methods must be
+    wrapped in conditionals. This was accidentally forgotten in:
+    
+    commit 314b2346df2d8e2d7d705b003c693b4fa0189bdf
+    Author: Edgar Kaziakhmedov <edgar.kaziakhmedov@virtuozzo.com>
+    Date:   Wed Feb 7 17:49:30 2018 +0300
+    
+    Set hints for virPyDictToTypedParams
+    
+    Predefine hints for all parameters possible to avoid wrong type
+    convert.
+    
+    This broke the build against any libvirt < 2.0.0
+    
+    Reviewed-by: Ján Tomko <jtomko@redhat.com>
+    
+    
+2018-04-03 Daniel P. Berrangé  <berrange@redhat.com>
+    
+    Post-release version bump to 4.3.0
+    
+    
+2018-03-23 Daniel P. Berrangé  <berrange@redhat.com>
+    
+    Disable Python 2 on future RHEL and Fedora > 29
+    The end of Python 2 is nearing, so declare when it will be removed
+    from libvirt Python binding RPMs.
+    
+    NB, this doesn't imply we'll be removing py2 support from upstream
+    libvirt-python on the same timeframe - we'll consider what todo
+    wrt that when upstream Python 2 finally goes EOL.
+    
+    Reviewed-by: Jiri Denemark <jdenemar@redhat.com>
+    
+    
+2018-03-05 Daniel P. Berrangé  <berrange@redhat.com>
+    
+    Post-release version bump to 4.2.0
+    
+    
+2018-03-05 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python 4.1.0
+    
+    
+2018-02-19 Pavel Hrdina  <phrdina@redhat.com>
+    
+    Fix virPyDictToTypedParams type hint for block copy params
+    Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+    
+    
+2018-02-19 Pavel Hrdina  <phrdina@redhat.com>
+    
+    Add missing virPyDictToTypedParams hint for migration params
+    Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+    
+    
+2018-02-19 Pavel Hrdina  <phrdina@redhat.com>
+    
+    Fix order of virPyDictToTypedParams hints
+    This corresponds to the order in libvirt-domain.h header file.
+    
+    Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+    
+    
+2018-02-19 Pavel Hrdina  <phrdina@redhat.com>
+    
+    Use static variables to store virPyDictToTypedParams hints
+    There is no need to have dynamic allocation every time the API
+    is called.  Rewrites commit <314b2346df>.
+    
+    Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+    
+    
+2018-02-19 Edgar Kaziakhmedov  <edgar.kaziakhmedov@virtuozzo.com>
+    
+    Set hints for virPyDictToTypedParams
+    Predefine hints for all parameters possible to avoid wrong type
+    convert.
+    
+    
+    
+2018-02-09 Daniel P. Berrangé  <berrange@redhat.com>
+    
+    tests: add special case for virStoragePoolLookupByTargetPath
+    This new API trips up the sanity test for checking mapping of
+    all C APIs into Python.
+    
+    
+    
+2018-02-06 Jiri Denemark  <jdenemar@redhat.com>
+    
+    event-test.py: Remove extra ( in --help output
+    
+    
+2018-01-19 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python-4.0.0
+    
+    
+2018-01-12 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Use python*_sitearch macros instead of manually defining the dir
+    Note we use python_sitearch not python2_sitearch, since the former
+    is more portable.
+    
+    Reviewed-by: Pavel Hrdina <phrdina@redhat.com>
+    
+    
+2018-01-12 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Fix filtering of RPM provides for .so files
+    Reviewed-by: Pavel Hrdina <phrdina@redhat.com>
+    
+    
+2018-01-12 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Require libvirt native version matching py version by default
+    Although we're capable of building against any libvirt >= 0.9.11, 99% of the
+    time we want RPM builds to be done against matching libvirt version, otherwise
+    we might silently build against an unexpected/wrong version.
+    
+    We don't support building against a native libvirt that's newer than the
+    python binding, since the generator may incorrectly handle new APIs. So use
+    == instead of >= too.
+    
+    Reviewed-by: Pavel Hrdina <phrdina@redhat.com>
+    
+    
+2018-01-12 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Turn on python3 sub-RPMs for RHEL > 7
+    It is expected that future RHEL-8 will have python3 by default, so enable that.
+    It is unclear whether python2 will still be available, so leave that enabled
+    for now.
+    
+    Reviewed-by: Pavel Hrdina <phrdina@redhat.com>
+    
+    
+2018-01-12 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Adapt to rename of py2 RPMs from python- to python2- prefix
+    Reviewed-by: Pavel Hrdina <phrdina@redhat.com>
+    
+    
+2018-01-12 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Add emacs mode marker to activate rpm-spec highlighting
+    Reviewed-by: Pavel Hrdina <phrdina@redhat.com>
+    
+    
+2018-01-12 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Add checks for min supported distros
+    Be clear about which distros we aim to support with the specfile, so we know
+    what we can cleanup in the spec later.
+    
+    Reviewed-by: Pavel Hrdina <phrdina@redhat.com>
+    
+    
+2018-01-12 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Allow override of which sub-RPMs to build
+    Allow using
+    
+    rpmbuild --define "with_python2 0"
+    
+    to override the default logic about which python sub-RPMs to build
+    
+    Reviewed-by: Pavel Hrdina <phrdina@redhat.com>
+    
+    
+2018-01-12 Daniel P. Berrange  <berrange@redhat.com>
+    
+    Allow disabling of python2 RPM build
+    With Fedora modularity, it is possible to have add-on repos for multiple
+    versions of python3. It is thus desirable to be able to build libvirt-python
+    in these repos, with only the python3 sub-RPMs enabled.
+    
+    Thus also helps if future RHEL/Fedora drop python2 entirely from their default
+    repos.
+    
+    Reviewed-by: Pavel Hrdina <phrdina@redhat.com>
+    
+    
+2017-12-11 Peng Hao  <peng.hao2@zte.com.cn>
+    
+    libvirt-python : PyObject memory leak
+    libvirt_virConnectDomainEventTunableCallback leak a PyObject.
+    
+    
+    
+2017-12-04 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python 3.10.0
+    
+    
 2017-11-30 Cédric Bosdonnat  <cbosdonnat@suse.com>
     
     Don't hardcode interpreter path
