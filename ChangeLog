@@ -1,3 +1,293 @@
+2018-11-26 Philipp Hahn  <hahn@univention.de>
+    
+    Add daemon to list of shutdown reasons
+    Add the support to work with libvirt commit 66a85cb13.
+    
+    
+    
+2018-11-20 John Ferlan  <jferlan@redhat.com>
+    
+    Fix copy paste error on the version check value
+    
+    
+2018-11-20 John Ferlan  <jferlan@redhat.com>
+    
+    Implement API binding for virDomainSetIOThreadParams
+    Similar to libvirt_virDomainBlockCopy (and migration API's). Create
+    the code for the new API.
+    
+    Reviewed-by: Pavel Hrdina <phrdina@redhat.com>
+    
+    
+2018-11-20 John Ferlan  <jferlan@redhat.com>
+    
+    Add check for params, nparams being a dictionary
+    If PyDict_Check fails, we should force an error rather than
+    blindly continuing on.
+    
+    Reviewed-by: Pavel Hrdina <phrdina@redhat.com>
+    
+    
+2018-11-20 John Ferlan  <jferlan@redhat.com>
+    
+    Add missing virPyDictToTypedParams for libvirt_virDomainBlockCopy
+    Need to free params like similar API's such as libvirt_virDomainMigrate3
+    and libvirt_virDomainMigrateToURI3.
+    
+    Reviewed-by: Pavel Hrdina <phrdina@redhat.com>
+    
+    
+2018-11-20 John Ferlan  <jferlan@redhat.com>
+    
+    Fix typos in virDomainSetSchedulerParameters name
+    Reviewed-by: Pavel Hrdina <phrdina@redhat.com>
+    
+    
+2018-11-04 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python 4.9.0
+    * setup.py: update for new release
+    
+    
+    
+2018-11-01 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Report ERROR events
+    VIR_DOMAIN_EVENT_ID_IO_ERROR and VIR_DOMAIN_EVENT_ID_IO_ERROR_REASON
+    callbacks receive the same 'action' parameter, so also translate that
+    numeric action to a descriptive text for the first callback.
+    
+    
+    
+2018-11-01 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Fix ERROR event
+    ERROR_EVENTS translates the numeric 'action' argument to a description,
+    not the 'reason' argument which already contains a descriptive string
+    like 'enospc'.
+    
+    > Traceback (most recent call last):
+    >   File "/usr/lib/python2.7/dist-packages/libvirt.py", line 4661, in _dispatchDomainEventIOErrorReasonCallback
+    >     reason, opaque)
+    >   File "libvirt-python/examples/event-test.py", line 536, in myDomainEventIOErrorReasonCallback
+    >     dom.name(), dom.ID(), srcpath, devalias, action, ERROR_EVENTS[reason]))
+    >   File "libvirt-python/examples/event-test.py", line 474, in __getitem__
+    >     data = self.args[item]
+    > TypeError: tuple indices must be integers, not str
+    
+    Fixes: f5928c6711654f1496707ca77f626b3192843d57
+    
+    
+2018-10-01 Daniel Veillard  <veillard@redhat.com>
+    
+    Release of libvirt-python 4.8.0
+    
+    - setup.py : updated for release
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Fix blanks
+    Closer to pep8
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Convert CONNECTION events
+    to use new Description class
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Convert SECRET events
+    to use new Description class
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Convert DEVICE events
+    to use new Description class
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Convert STORAGE events
+    to use new Description class
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Convert NETWORK events
+    to use new Description class
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Convert TRAY events
+    to use new Description class
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Convert DISK events
+    to use new Description class
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Convert GRAPHICS events
+    to use new Description class
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Convert AGENT events
+    to use new Description class
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Convert ERROR events
+    to use new Description class
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Convert WATCHDOG events
+    to use new Description class
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Convert BLOCKJOB events
+    to use new Description class
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Convert LIVECYCLE events
+    to use new Description class
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Add class for event descriptions
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Simplify event ID lists
+    by directly building the list with the IDs instead of appending them
+    explicitly.
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Merge livecycle callbacks
+    Registering the same function twice using the old domainEventRegister()
+    interface would not work, as the function reference is used for
+    un-registering.
+    
+    But it is not a problem with the new interface domainEventRegisterAny(),
+    as that returns a unique ID.
+    
+    While at it also demonstrate the 'opaque' mechanism.
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Use __file__
+    instead of sys.argv[0]
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Add missing globale statement
+    to fix loop termination on exit.
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Remove dead assignment
+    variable is unused
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Remove extra parenthesis
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Handle closed connection
+    If libvirtd terminates while event-test.py has an open connection to it,
+    it will crash with the following traceback:
+    
+    > myConnectionCloseCallback: qemu:///session: Error
+    > Exception in thread libvirtEventLoop:
+    > Traceback (most recent call last):
+    >   File "/usr/lib/python2.7/threading.py", line 801, in __bootstrap_inner
+    >     self.run()
+    >   File "/usr/lib/python2.7/threading.py", line 754, in run
+    >     self.__target(*self.__args, **self.__kwargs)
+    >   File "examples/event-test.py", line 424, in virEventLoopPollRun
+    >     eventLoop.run_loop()
+    >   File "examples/event-test.py", line 242, in run_loop
+    >     self.run_once()
+    >   File "examples/event-test.py", line 187, in run_once
+    >     libvirt.virEventInvokeFreeCallback(opaque)
+    > AttributeError: 'module' object has no attribute 'virEventInvokeFreeCallback'
+    >
+    > libvirt: XML-RPC error : internal error: client socket is closed
+    > Traceback (most recent call last):
+    >   File "examples/event-test.py", line 872, in <module>
+    >     main()
+    >   File "examples/event-test.py", line 854, in main
+    >     vc.secretEventDeregisterAny(id)
+    >   File "/usr/lib/python2.7/dist-packages/libvirt.py", line 4987, in secretEventDeregisterAny
+    >     if ret == -1: raise libvirtError ('virConnectSecretEventDeregisterAny() failed', conn=self)
+    > libvirt.libvirtError: internal error: client socket is closed
+    > Closing qemu:///session
+    
+    Skip unregistering the event callbacks and closing the connection if the
+    connection is already broken / closed.
+    
+    
+    
+2018-09-24 Philipp Hahn  <hahn@univention.de>
+    
+    event-test.py: Sync list of domain lifecycle events
+    Add new events to prevent crash:
+    > Traceback (most recent call last):
+    >   File "/usr/lib/python2.7/dist-packages/libvirt.py", line 4601, in _dispatchDomainEventCallbacks
+    >     cb(self, virDomain(self, _obj=dom), event, detail, opaque)
+    >   File "libvirt-python/examples/event-test.py", line 505, in myDomainEventCallback1
+    >     domDetailToString(event, detail)))
+    >   File "libvirt-python/examples/event-test.py", line 484, in domDetailToString
+    >     return domEventStrings[event][detail]
+    > IndexError: tuple index out of range
+    
+    
+    
 2018-09-03 Daniel Veillard  <veillard@redhat.com>
     
     Release of libvirt-python=4.7.0

@@ -5,17 +5,17 @@
 # Source0 file verified with key 0x15588B26596BEA5D (Daniel.Veillard@w3.org)
 #
 Name     : libvirt-python
-Version  : 4.7.0
-Release  : 53
-URL      : https://libvirt.org/sources/python/libvirt-python-4.7.0.tar.gz
-Source0  : https://libvirt.org/sources/python/libvirt-python-4.7.0.tar.gz
-Source99 : https://libvirt.org/sources/python/libvirt-python-4.7.0.tar.gz.asc
+Version  : 4.10.0
+Release  : 54
+URL      : https://libvirt.org/sources/python/libvirt-python-4.10.0.tar.gz
+Source0  : https://libvirt.org/sources/python/libvirt-python-4.10.0.tar.gz
+Source99 : https://libvirt.org/sources/python/libvirt-python-4.10.0.tar.gz.asc
 Summary  : The libvirt virtualization API python binding
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1 LGPL-2.1+
-Requires: libvirt-python-python3
-Requires: libvirt-python-license
-Requires: libvirt-python-python
+Requires: libvirt-python-license = %{version}-%{release}
+Requires: libvirt-python-python = %{version}-%{release}
+Requires: libvirt-python-python3 = %{version}-%{release}
 BuildRequires : buildreq-distutils3
 BuildRequires : libvirt-dev
 
@@ -35,7 +35,7 @@ license components for the libvirt-python package.
 %package python
 Summary: python components for the libvirt-python package.
 Group: Default
-Requires: libvirt-python-python3
+Requires: libvirt-python-python3 = %{version}-%{release}
 
 %description python
 python components for the libvirt-python package.
@@ -51,15 +51,16 @@ python3 components for the libvirt-python package.
 
 
 %prep
-%setup -q -n libvirt-python-4.7.0
+%setup -q -n libvirt-python-4.10.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1536175429
-python3 setup.py build -b py3
+export SOURCE_DATE_EPOCH=1545534391
+export MAKEFLAGS=%{?_smp_mflags}
+python3 setup.py build
 
 %check
 export http_proxy=http://127.0.0.1:9/
@@ -69,10 +70,10 @@ PYTHONPATH=%{buildroot}/usr/lib/python2.7/site-packages py.test-2.7 --verbose ||
 PYTHONPATH=%{buildroot}/usr/lib/python3.5/site-packages py.test-3.5 --verbose || :
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/libvirt-python
-cp COPYING %{buildroot}/usr/share/doc/libvirt-python/COPYING
-cp COPYING.LESSER %{buildroot}/usr/share/doc/libvirt-python/COPYING.LESSER
-python3 -tt setup.py build -b py3 install --root=%{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/libvirt-python
+cp COPYING %{buildroot}/usr/share/package-licenses/libvirt-python/COPYING
+cp COPYING.LESSER %{buildroot}/usr/share/package-licenses/libvirt-python/COPYING.LESSER
+python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -81,9 +82,9 @@ echo ----[ mark ]----
 %defattr(-,root,root,-)
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/libvirt-python/COPYING
-/usr/share/doc/libvirt-python/COPYING.LESSER
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/libvirt-python/COPYING
+/usr/share/package-licenses/libvirt-python/COPYING.LESSER
 
 %files python
 %defattr(-,root,root,-)
