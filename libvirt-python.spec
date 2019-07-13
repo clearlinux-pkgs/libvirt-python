@@ -6,7 +6,7 @@
 #
 Name     : libvirt-python
 Version  : 4.10.0
-Release  : 56
+Release  : 57
 URL      : https://libvirt.org/sources/python/libvirt-python-4.10.0.tar.gz
 Source0  : https://libvirt.org/sources/python/libvirt-python-4.10.0.tar.gz
 Source99 : https://libvirt.org/sources/python/libvirt-python-4.10.0.tar.gz.asc
