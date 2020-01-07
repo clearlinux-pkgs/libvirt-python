@@ -4,7 +4,7 @@
 #
 Name     : libvirt-python
 Version  : 5.8.0
-Release  : 59
+Release  : 60
 URL      : https://github.com/libvirt/libvirt-python/archive/v5.8.0.tar.gz
 Source0  : https://github.com/libvirt/libvirt-python/archive/v5.8.0.tar.gz
 Summary  : No detailed summary available
