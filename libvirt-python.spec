@@ -4,10 +4,10 @@
 #
 Name     : libvirt-python
 Version  : 5.8.0
-Release  : 61
+Release  : 62
 URL      : https://github.com/libvirt/libvirt-python/archive/v5.8.0.tar.gz
 Source0  : https://github.com/libvirt/libvirt-python/archive/v5.8.0.tar.gz
-Summary  : libvirt python binding
+Summary  : The libvirt virtualization API python binding
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
 Requires: libvirt-python-license = %{version}-%{release}
@@ -23,23 +23,9 @@ BuildRequires : util-linux
 BuildRequires : virtualenv
 
 %description
-Some simple examples on how to use the Python API for libvirt
-The examples are:
-dominfo.py  - print information about a running domU based on the results of
-virDomainGetInfo and virDomainGetXMLDesc
-domstart.py - create a domU from an XML description if the domU isn't
-running yet
-domsave.py  - save all running domU's into a directory
-domrestore.py - restore domU's from their saved files in a directory
-esxlist.py  - list active domains of an VMware ESX host and print some info.
-also demonstrates how to use the libvirt.openAuth() method
-dhcpleases.py - list dhcp leases for a given virtual network
-domipaddrs.py - list IP addresses for guest domains
-guest-vcpus - two helpers to make the guest agent event useful with agent based
-vCPU state modification
-nodestats.py - print total memory and free memory for each host NUMA node and
-the memory strictly bound to certain host nodes for each running
-domain.
+=============================
+This package provides a python binding to the libvirt.so,
+libvirt-qemu.so and libvirt-lxc.so library APIs.
 
 %package license
 Summary: license components for the libvirt-python package.
@@ -62,7 +48,7 @@ python components for the libvirt-python package.
 Summary: python3 components for the libvirt-python package.
 Group: Default
 Requires: python3-core
-Provides: pypi(libvirt-python)
+Provides: pypi(libvirt_python)
 
 %description python3
 python3 components for the libvirt-python package.
@@ -77,8 +63,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1583169887
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1583537321
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
