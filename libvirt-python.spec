@@ -4,7 +4,7 @@
 #
 Name     : libvirt-python
 Version  : 5.8.0
-Release  : 65
+Release  : 66
 URL      : https://github.com/libvirt/libvirt-python/archive/v5.8.0.tar.gz
 Source0  : https://github.com/libvirt/libvirt-python/archive/v5.8.0.tar.gz
 Summary  : The libvirt virtualization API python binding
