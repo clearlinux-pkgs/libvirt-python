@@ -4,7 +4,7 @@
 #
 Name     : libvirt-python
 Version  : 7.3.0
-Release  : 71
+Release  : 72
 URL      : https://github.com/libvirt/libvirt-python/archive/v7.3.0/libvirt-python-7.3.0.tar.gz
 Source0  : https://github.com/libvirt/libvirt-python/archive/v7.3.0/libvirt-python-7.3.0.tar.gz
 Summary  : The libvirt virtualization API python binding
