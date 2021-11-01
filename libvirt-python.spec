@@ -4,7 +4,7 @@
 #
 Name     : libvirt-python
 Version  : 7.8.0
-Release  : 81
+Release  : 82
 URL      : https://github.com/libvirt/libvirt-python/archive/v7.8.0/libvirt-python-7.8.0.tar.gz
 Source0  : https://github.com/libvirt/libvirt-python/archive/v7.8.0/libvirt-python-7.8.0.tar.gz
 Summary  : The libvirt virtualization API python binding
@@ -62,7 +62,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1635749334
+export SOURCE_DATE_EPOCH=1635749432
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
