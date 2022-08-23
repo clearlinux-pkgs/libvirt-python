@@ -4,7 +4,7 @@
 #
 Name     : libvirt-python
 Version  : 8.6.0
-Release  : 96
+Release  : 97
 URL      : https://github.com/libvirt/libvirt-python/archive/v8.6.0/libvirt-python-8.6.0.tar.gz
 Source0  : https://github.com/libvirt/libvirt-python/archive/v8.6.0/libvirt-python-8.6.0.tar.gz
 Summary  : The libvirt virtualization API python binding
