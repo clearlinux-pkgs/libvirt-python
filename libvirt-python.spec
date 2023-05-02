@@ -4,15 +4,13 @@
 # Using build pattern: distutils3
 #
 Name     : libvirt-python
-Version  : 9.2.0
-Release  : 105
-URL      : https://github.com/libvirt/libvirt-python/archive/v9.2.0/libvirt-python-9.2.0.tar.gz
-Source0  : https://github.com/libvirt/libvirt-python/archive/v9.2.0/libvirt-python-9.2.0.tar.gz
+Version  : 9.3.0
+Release  : 106
+URL      : https://github.com/libvirt/libvirt-python/archive/v9.3.0/libvirt-python-9.3.0.tar.gz
+Source0  : https://github.com/libvirt/libvirt-python/archive/v9.3.0/libvirt-python-9.3.0.tar.gz
 Summary  : The libvirt virtualization API python binding
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
-Requires: libvirt-python-filemap = %{version}-%{release}
-Requires: libvirt-python-lib = %{version}-%{release}
 Requires: libvirt-python-license = %{version}-%{release}
 Requires: libvirt-python-python = %{version}-%{release}
 Requires: libvirt-python-python3 = %{version}-%{release}
@@ -31,24 +29,6 @@ BuildRequires : pypi-virtualenv
 =============================
 This package provides a python binding to the libvirt.so,
 libvirt-qemu.so and libvirt-lxc.so library APIs.
-
-%package filemap
-Summary: filemap components for the libvirt-python package.
-Group: Default
-
-%description filemap
-filemap components for the libvirt-python package.
-
-
-%package lib
-Summary: lib components for the libvirt-python package.
-Group: Libraries
-Requires: libvirt-python-license = %{version}-%{release}
-Requires: libvirt-python-filemap = %{version}-%{release}
-
-%description lib
-lib components for the libvirt-python package.
-
 
 %package license
 Summary: license components for the libvirt-python package.
@@ -70,7 +50,6 @@ python components for the libvirt-python package.
 %package python3
 Summary: python3 components for the libvirt-python package.
 Group: Default
-Requires: libvirt-python-filemap = %{version}-%{release}
 Requires: python3-core
 Provides: pypi(libvirt_python)
 
@@ -79,10 +58,10 @@ python3 components for the libvirt-python package.
 
 
 %prep
-%setup -q -n libvirt-python-9.2.0
-cd %{_builddir}/libvirt-python-9.2.0
+%setup -q -n libvirt-python-9.3.0
+cd %{_builddir}/libvirt-python-9.3.0
 pushd ..
-cp -a libvirt-python-9.2.0 buildavx2
+cp -a libvirt-python-9.3.0 buildavx2
 popd
 
 %build
@@ -90,12 +69,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1680531510
+export SOURCE_DATE_EPOCH=1683039559
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 
@@ -131,14 +110,6 @@ popd
 %files
 %defattr(-,root,root,-)
 
-%files filemap
-%defattr(-,root,root,-)
-/usr/share/clear/filemap/filemap-libvirt-python
-
-%files lib
-%defattr(-,root,root,-)
-/usr/share/clear/optimized-elf/other*
-
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/libvirt-python/01a6b4bf79aca9b556822601186afab86e8c4fbf
@@ -149,4 +120,5 @@ popd
 
 %files python3
 %defattr(-,root,root,-)
+/V3/usr/lib/python3*/*
 /usr/lib/python3*/*
