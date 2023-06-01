@@ -5,7 +5,7 @@
 #
 Name     : libvirt-python
 Version  : 9.4.0
-Release  : 108
+Release  : 109
 URL      : https://github.com/libvirt/libvirt-python/archive/v9.4.0/libvirt-python-9.4.0.tar.gz
 Source0  : https://github.com/libvirt/libvirt-python/archive/v9.4.0/libvirt-python-9.4.0.tar.gz
 Summary  : The libvirt virtualization API python binding
@@ -69,7 +69,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1685634863
+export SOURCE_DATE_EPOCH=1685646711
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
