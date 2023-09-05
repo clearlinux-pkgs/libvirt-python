@@ -4,10 +4,10 @@
 # Using build pattern: pyproject
 #
 Name     : libvirt-python
-Version  : 9.6.0
-Release  : 111
-URL      : https://github.com/libvirt/libvirt-python/archive/v9.6.0/libvirt-python-9.6.0.tar.gz
-Source0  : https://github.com/libvirt/libvirt-python/archive/v9.6.0/libvirt-python-9.6.0.tar.gz
+Version  : 9.7.0
+Release  : 112
+URL      : https://github.com/libvirt/libvirt-python/archive/v9.7.0/libvirt-python-9.7.0.tar.gz
+Source0  : https://github.com/libvirt/libvirt-python/archive/v9.7.0/libvirt-python-9.7.0.tar.gz
 Summary  : The libvirt virtualization API python binding
 Group    : Development/Tools
 License  : LGPL-2.1
@@ -63,10 +63,10 @@ python3 components for the libvirt-python package.
 
 
 %prep
-%setup -q -n libvirt-python-9.6.0
-cd %{_builddir}/libvirt-python-9.6.0
+%setup -q -n libvirt-python-9.7.0
+cd %{_builddir}/libvirt-python-9.7.0
 pushd ..
-cp -a libvirt-python-9.6.0 buildavx2
+cp -a libvirt-python-9.7.0 buildavx2
 popd
 
 %build
@@ -74,7 +74,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1690898141
+export SOURCE_DATE_EPOCH=1693928310
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
