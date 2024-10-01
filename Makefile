@@ -1,5 +1,5 @@
 PKG_NAME := libvirt-python
-URL = https://github.com/libvirt/libvirt-python/archive/v10.7.0/libvirt-python-10.7.0.tar.gz
+URL = https://github.com/libvirt/libvirt-python/archive/v10.8.0/libvirt-python-10.8.0.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common
