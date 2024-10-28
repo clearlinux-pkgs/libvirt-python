@@ -7,7 +7,7 @@
 #
 Name     : libvirt-python
 Version  : 10.8.0
-Release  : 126
+Release  : 127
 URL      : https://github.com/libvirt/libvirt-python/archive/v10.8.0/libvirt-python-10.8.0.tar.gz
 Source0  : https://github.com/libvirt/libvirt-python/archive/v10.8.0/libvirt-python-10.8.0.tar.gz
 Summary  : No detailed summary available
