@@ -6,10 +6,10 @@
 # autospec commit: 65cf152
 #
 Name     : libvirt-python
-Version  : 11.4.0
-Release  : 134
-URL      : https://github.com/libvirt/libvirt-python/archive/v11.4.0/libvirt-python-11.4.0.tar.gz
-Source0  : https://github.com/libvirt/libvirt-python/archive/v11.4.0/libvirt-python-11.4.0.tar.gz
+Version  : 11.5.0
+Release  : 135
+URL      : https://github.com/libvirt/libvirt-python/archive/v11.5.0/libvirt-python-11.5.0.tar.gz
+Source0  : https://github.com/libvirt/libvirt-python/archive/v11.5.0/libvirt-python-11.5.0.tar.gz
 Summary  : The libvirt virtualization API python binding
 Group    : Development/Tools
 License  : LGPL-2.1
@@ -65,10 +65,10 @@ python3 components for the libvirt-python package.
 
 
 %prep
-%setup -q -n libvirt-python-11.4.0
-cd %{_builddir}/libvirt-python-11.4.0
+%setup -q -n libvirt-python-11.5.0
+cd %{_builddir}/libvirt-python-11.5.0
 pushd ..
-cp -a libvirt-python-11.4.0 buildavx2
+cp -a libvirt-python-11.5.0 buildavx2
 popd
 
 %build
@@ -76,7 +76,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1748876971
+export SOURCE_DATE_EPOCH=1751378041
 export GCC_IGNORE_WERROR=1
 CLEAR_INTERMEDIATE_CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 CLEAR_INTERMEDIATE_FCFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
